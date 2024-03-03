@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import BottomNavigationBar from "@/components/bottom-navigation-bar";
+import StoreProvider from "@/components/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="container mx-auto">
-          {children}
-        </div>
-        <BottomNavigationBar/>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <div className="container mx-auto">
+            {children}
+          </div>
+          <BottomNavigationBar/>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
