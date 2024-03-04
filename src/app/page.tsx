@@ -8,17 +8,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { useAppSelector } from "./store/hooks";
-import { getBudgets } from "./store/reducer/budget";
+import { useAppSelector } from "@/lib/store/hooks";
+import { getBudgets } from "@/lib/store/reducer/budget";
 
 export default function Home() {
-  const data = useAppSelector(getBudgets);
+  const { budgets } = useAppSelector(getBudgets);
 
   return (
-    <div>
-      <div className="grid grid-rows-2 bg-yellow-200" style={{ height: "15vh", }}>
+    <div style={{ height: "90vh", }}>
+      <div className="grid grid-rows-2 bg-yellow-200" style={{ height: "15%", }}>
         <div className="bg-red-200 flex items-center">
-          <h1 className="font-bold">TH Budget Tracker { data }</h1>
+          <h1 className="font-bold">TH Budget Tracker</h1>
         </div>
         <div className="flex items-center gap-4">
           <span className="text-xs">Your balance</span>
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-red-200" style={{ height: "75vh", }}>
+      <div className="bg-red-200" style={{ height: "75%", }}>
         <div>
           <Card>
             <CardHeader>
@@ -34,7 +34,7 @@ export default function Home() {
               <CardDescription>Card Description</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Card Content</p>
+              <p>{ budgets["year2023"].listTransactionsCategories }</p>
             </CardContent>
             <CardFooter>
               <p>Card Footer</p>
