@@ -51,13 +51,39 @@ export default function Home() {
         className="container mx-auto grid grid-rows-2 text-white"
         style={{ height: "20%", backgroundColor: "#26C165",}}
       >
-        <div className="flex items-center gap-2 border-b-1">
+        <div className="flex items-center border-b-1">
           <h1 className="font-bold text-xl">TH Budget Tracker</h1>
-          <Icon className='text-lg' icon="simple-line-icons:plus"/>
         </div>
         <div className="flex items-center gap-4">
           <span className="text-xs">Your balance</span>
-          <span className="font-bold text-xl">RM10000</span>
+          <div className="flex flex-row items-center gap-3">
+            <span className="font-bold text-xl">RM10000</span>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Icon className='text-base' icon="simple-line-icons:plus"/>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Add total budget</DialogTitle>
+                </DialogHeader>
+                <div className="flex items-center space-x-2">
+                  <div className="grid flex-1 gap-2 justify-center">
+                    <DialogDescription className="text-center">
+                      Amount (RM)
+                    </DialogDescription>
+                    <Input className="text-center font-bold text-lg" type="number" placeholder="Enter your budget"/>
+                  </div>
+                </div>
+                <DialogFooter className="mt-4 sm:justify-start">
+                  <DialogClose asChild>
+                    <Button type="button" variant="default">
+                      Save
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
       </div>
 
