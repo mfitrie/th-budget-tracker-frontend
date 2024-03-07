@@ -15,11 +15,6 @@ const fakeBudget: BudgetSchema = {
     budgets: {
         year2023: {
             totalBudget: {
-                bank: Array(2).fill(null).map(item => ({
-                    name: faker.word.adverb(),
-                    amount: +faker.finance.amount(),
-                    currency: "myr",
-                })),
                 cash: {
                     amount: +faker.finance.amount(),
                     currency: "myr",
@@ -33,7 +28,8 @@ const fakeBudget: BudgetSchema = {
                 })),
             },
             listTransactionsCategories: [
-                "Grocery"
+                "Grocery",
+                "Add budget",
             ],
             months: {
                 january: {
@@ -44,7 +40,6 @@ const fakeBudget: BudgetSchema = {
                     },
                     transactions: Array(1).fill(null).map(item => ({
                         timestamp: faker.date.past().toISOString(),
-                        account: "cash",
                         amount: +faker.finance.amount(),
                         currency: "myr",
                         category: "Grocery",

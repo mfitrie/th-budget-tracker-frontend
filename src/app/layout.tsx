@@ -20,7 +20,9 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body className={inter.className}>
-          <div className="container mx-auto">
+          <div
+            style={{ backgroundColor: "#f7f7f7" }}
+          >
             {children}
           </div>
           <BottomNavigationBar/>

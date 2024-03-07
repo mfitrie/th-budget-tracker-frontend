@@ -18,7 +18,6 @@ type User = {
 }
 
 type TotalBudget = {
-    bank: Bank[],
     // TODO: find a way to modify cash if they use currency other thay myr
     cash: {
         amount: number,
@@ -27,11 +26,11 @@ type TotalBudget = {
     replenishBudgetTransactions: ReplenishBudgetTransaction[],
 }
 
-type Bank = {
-    name: string,
-    amount: number,
-    currency: string,
-}
+// type Bank = {
+//     name: string,
+//     amount: number,
+//     currency: string,
+// }
 
 type ReplenishBudgetTransaction = {
     timestamp: string,
@@ -53,7 +52,7 @@ type MonthBudget = {
 
 type MonthTransaction = {
     timestamp: string,
-    account: string,
+    // account: string,
     amount: number,
     currency: string,
     category: string,
