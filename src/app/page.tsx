@@ -8,6 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { Icon } from '@iconify/react';
 import { useAppSelector } from "@/lib/store/hooks";
@@ -32,12 +45,11 @@ export default function Home() {
 
   return (
     <div 
-      className="overflow-auto" 
       style={{ height: "90vh" }}
     >
-      <div 
-        className="container mx-auto mb-4 grid grid-rows-2 text-white"
-        style={{ height: "15%", backgroundColor: "#26C165",}}
+      <div
+        className="container mx-auto grid grid-rows-2 text-white"
+        style={{ height: "20%", backgroundColor: "#26C165",}}
       >
         <div className="flex items-center gap-2 border-b-1">
           <h1 className="font-bold text-xl">TH Budget Tracker</h1>
@@ -50,8 +62,8 @@ export default function Home() {
       </div>
 
       <div
-        className="container mx-auto flex flex-col gap-4" 
-        style={{ height: "75%", }}
+        className="container mx-auto py-4 flex flex-col gap-4 overflow-auto" 
+        style={{ height: "80%", maxHeight: "80%" }}
       >
         <div>
           <Card>
@@ -72,7 +84,32 @@ export default function Home() {
         <div>
           <Card>
             <CardHeader className="flex items-end p-2">
-              <Icon className='text-3xl' icon="ph:dots-three-bold"/>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Icon className='text-3xl' icon="ph:dots-three-bold"/>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>What is your monthly budget?</DialogTitle>
+                  </DialogHeader>
+                  <div className="flex items-center space-x-2">
+                    <div className="grid flex-1 gap-2 justify-center">
+                      <DialogDescription className="text-center">
+                        Amount (RM)
+                      </DialogDescription>
+                      <Input className="text-center font-bold text-lg" type="number" placeholder="Enter your budget"/>
+                    </div>
+                  </div>
+                  <DialogFooter className="mt-4 sm:justify-start">
+                    <DialogClose asChild>
+                      <Button type="button" variant="default">
+                        Save
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
             </CardHeader>
             <CardContent className="grid grid-cols-12 px-2">
               <div className="col-span-3 flex items-center justify-center">
