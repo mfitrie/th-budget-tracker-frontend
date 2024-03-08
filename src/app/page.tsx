@@ -93,22 +93,6 @@ export default function Home() {
       >
         <div>
           <Card>
-            <CardHeader>
-              {/* <CardTitle>Cash</CardTitle> */}
-              {/* <CardDescription>Card Description</CardDescription> */}
-            </CardHeader>
-            <CardContent className="flex flex-row justify-between">
-              <span>Cash</span>
-              <span className="font-bold text-xl">RM10000</span>
-            </CardContent>
-            <CardFooter>
-              {/* <p>Card Footer</p> */}
-            </CardFooter>
-          </Card>
-        </div>
-
-        <div>
-          <Card>
             <CardHeader className="flex items-end p-2">
               <Dialog>
                 <DialogTrigger asChild>
