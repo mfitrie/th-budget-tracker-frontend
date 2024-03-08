@@ -1,19 +1,5 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import {
   Card,
   CardContent,
@@ -22,38 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Icon } from '@iconify/react';
 import { useState } from "react";
 import TransactionItem from "@/components/transaction-item"
 
 
 export default function Transaction() {
-  // const [open, setOpen] = useState(false);
-  // const [value, setValue] = useState("");
-
-  // const frameworks = [
-  //   {
-  //     value: "next.js",
-  //     label: "Next.js",
-  //   },
-  //   {
-  //     value: "sveltekit",
-  //     label: "SvelteKit",
-  //   },
-  //   {
-  //     value: "nuxt.js",
-  //     label: "Nuxt.js",
-  //   },
-  //   {
-  //     value: "remix",
-  //     label: "Remix",
-  //   },
-  //   {
-  //     value: "astro",
-  //     label: "Astro",
-  //   },
-  // ];
-
 
   return (
     <div style={{ height: "90vh", }}>
@@ -66,7 +33,16 @@ export default function Transaction() {
         </div>
         <div>
           <span>Transaction History</span>
-          {/* TODO: use Select component for sorting */}
+          {/* <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select> */}
         </div>
       </div>
 
