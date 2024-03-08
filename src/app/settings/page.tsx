@@ -1,7 +1,7 @@
 export default function Settings() {
     return (
-      <div style={{ height: "90vh", }}>
-        Settings Page
+      <div className="flex justify-center items-center" style={{ height: "90vh", }}>
+        <span>Settings Page</span>
       </div>
     );
   }
