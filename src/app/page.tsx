@@ -64,7 +64,7 @@ export default function Home() {
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle>Add total budget</DialogTitle>
+                  <DialogTitle className="text-left">Add total budget</DialogTitle>
                 </DialogHeader>
                 <div className="flex items-center space-x-2">
                   <div className="grid flex-1 gap-2 justify-center">
@@ -116,7 +116,7 @@ export default function Home() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
-                    <DialogTitle>What is your monthly budget?</DialogTitle>
+                    <DialogTitle className="text-left">What is your monthly budget?</DialogTitle>
                   </DialogHeader>
                   <div className="flex items-center space-x-2">
                     <div className="grid flex-1 gap-2 justify-center">
