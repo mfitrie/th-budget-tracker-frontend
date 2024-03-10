@@ -17,10 +17,14 @@ import {
 } from "@/components/ui/select"
 import { Icon } from '@iconify/react';
 import { useState } from "react";
+import { useAppSelector } from "@/lib/store/hooks";
+import { getBudgets } from "@/lib/store/reducer/budget";
 import TransactionItem from "@/components/transaction-item"
+import dayjs from "dayjs";
 
 
 export default function Transaction() {
+  const { budget } = useAppSelector(getBudgets);
 
   return (
     <div style={{ height: "90vh", }}>
@@ -53,12 +57,12 @@ export default function Transaction() {
         <Card>
           <CardContent className="px-2">
             {
-              Array(40).fill(null).map((item, index) => (
+              budget.transactions.map((item, index) => (
                 <TransactionItem
-                  key={index}
-                  expenseName="Pen"
-                  date="7 Mar 2024 - 11:43 AM"
-                  amount={60}
+                  key={ index }
+                  expenseName={ item.expenseName }
+                  date={ dayjs(item.timestamp).format("D MM YYYY - h:mm a") }
+                  amount={ item.amount }
                 />
               ))
             }

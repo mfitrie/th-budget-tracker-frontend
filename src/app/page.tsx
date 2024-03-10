@@ -23,12 +23,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { Icon } from '@iconify/react';
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getBudgets } from "@/lib/store/reducer/budget";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 
 export default function Home() {
-  const { budgets } = useAppSelector(getBudgets);
+  const { budget } = useAppSelector(getBudgets);
 
   const data = [
     { value: 5, label: 'Aaaa' },
@@ -39,7 +39,7 @@ export default function Home() {
   
   const size = {
     width: 300,
-    height: 200,
+    height: 150,
   };
 
 
@@ -57,7 +57,7 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <span className="text-xs">Your balance</span>
           <div className="flex flex-row items-center gap-3">
-            <span className="font-bold text-xl">RM10000</span>
+            <span className="font-bold text-xl">RM{ budget.account.cash.amount }</span>
             <Dialog>
               <DialogTrigger asChild>
                 <Icon className='text-base' icon="simple-line-icons:plus"/>
@@ -132,7 +132,7 @@ export default function Home() {
               </div>
               <div className="col-span-9 flex flex-col gap-1">
                 <span className="font-bold">Monthly budget</span>
-                <span className="font-bold text-lg">RM5000</span>
+                <span className="font-bold text-lg">RM{ budget.monthlyBudget.amount }</span>
                 <Progress value={33} />
                 <div className="flex flex-row justify-between">
                   <CardDescription>spent: RM4300</CardDescription>
@@ -155,7 +155,8 @@ export default function Home() {
                   // arcLabel: (item) => `${item.label} (${item.value})`,
                   arcLabelMinAngle: 45,
                   innerRadius: 50,
-                  data,
+                  data: transactionGroupByCategory(budget.transactions)
+                  // data
                 },
               ]}
               sx={{
@@ -172,4 +173,25 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+type dataValue = {
+  label: string,
+  value: number
+}
+
+function transactionGroupByCategory(transactions: any): dataValue[]{
+  const groupedTransactions = transactions.reduce((acc: any, transaction: any) => {
+    const { category, amount } = transaction;
+    if (!acc[category]) {
+        acc[category] = { 
+          value: 0,
+          label: category, 
+        };
+    }
+    acc[category].value += amount;
+    return acc;
+  }, {});
+
+  return Object.values(groupedTransactions);
 }
