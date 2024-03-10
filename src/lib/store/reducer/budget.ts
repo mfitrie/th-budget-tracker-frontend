@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { AppState } from "../store";
-import { BudgetSchema } from "@/app/types/budget-schema";
+import { BudgetSchema, Transactions } from "@/app/types/budget-schema";
 import { faker } from "@faker-js/faker";
 
 // const listFakeData =
@@ -53,21 +53,14 @@ export const budgetSlice = createSlice({
     budgets: fakeBudget,
   },
   reducers: {
-    // increment: (state) => {
-    //   state.value += 1;
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1;
-    // },
-    // incrementByAmount: (state, action) => {
-    //   state.value += action.payload;
-    // }
+    addExpense: (state, action: PayloadAction<Transactions>) => {
+        const { payload } = action;
+        state.budgets.budget.transactions.push(payload);
+    },
   }
 })
 
 export const { 
-    // decrement, 
-    // increment, 
-    // incrementByAmount
+    addExpense,
 } = budgetSlice.actions;
 export const getBudgets = (state: AppState) => state.budget.budgets;

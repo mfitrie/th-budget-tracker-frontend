@@ -32,7 +32,7 @@ type ReplenishBudgetTransaction = {
     budgetType: "monthly" | "total",
 }
 
-type Transactions = {
+export type Transactions = {
     expenseName: string,
     timestamp: string,
     // account: string,

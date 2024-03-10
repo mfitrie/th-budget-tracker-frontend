@@ -26,6 +26,8 @@ import { Icon } from '@iconify/react';
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getBudgets } from "@/lib/store/reducer/budget";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
 
 export default function Home() {
   const { budget } = useAppSelector(getBudgets);
@@ -47,6 +49,14 @@ export default function Home() {
     <div 
       style={{ height: "90vh" }}
     >
+      {/* <Alert style={{
+        position: "absolute"
+      }}>
+        <AlertTitle>Heads up!</AlertTitle>
+        <AlertDescription>
+          You can add components to your app using the cli.
+        </AlertDescription>
+      </Alert> */}
       <div
         className="container mx-auto grid grid-rows-2 text-white"
         style={{ height: "20%", backgroundColor: "#26C165",}}
