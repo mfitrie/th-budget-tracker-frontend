@@ -5,12 +5,14 @@ import { Icon } from '@iconify/react';
 
 type TypeTransactionItem = {
     expenseName: string,
+    category: string,
     date: string,
     amount: number,
 }
 
 export default function TransactionItem({
     expenseName,
+    category,
     date,
     amount
 }: TypeTransactionItem) {
@@ -26,7 +28,7 @@ export default function TransactionItem({
             </div>
             <div className="col-span-7">
                 <span className="font-bold">{ expenseName }</span>
-                {/* <CardDescription className="text-xs">7 Mar 2024 - 11:43 AM</CardDescription> */}
+                <CardDescription className="text-xs">{ category }</CardDescription>
                 <CardDescription className="text-xs">{ date }</CardDescription>
             </div>
             <div className="col-span-3 flex flex-col text-right">

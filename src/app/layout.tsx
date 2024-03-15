@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import BottomNavigationBar from "@/components/bottom-navigation-bar";
 import StoreProvider from "@/components/StoreProvider";
+import AlertCustom from "@/components/alert-custom";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,10 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body className={inter.className}>
+          {/* <AlertCustom 
+            title={ "Expense" }
+            message={ "Add expense success" }
+          /> */}
           <div
             style={{ backgroundColor: "#f7f7f7" }}
           >

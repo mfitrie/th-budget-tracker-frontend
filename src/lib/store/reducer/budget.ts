@@ -44,21 +44,49 @@ const fakeBudget: BudgetSchema = {
             "Grocery",
             "Add budget",
         ],
-    }
+    },
 }
+
+const initChartData: {
+    label: string,
+    value: number,
+}[] = transactionGroupByCategory(fakeBudget.budget.transactions);
 
 export const budgetSlice = createSlice({
   name: "budget",
   initialState: { 
     budgets: fakeBudget,
+    chartData: initChartData,
   },
   reducers: {
     addExpense: (state, action: PayloadAction<Transactions>) => {
         const { payload } = action;
         state.budgets.budget.transactions.push(payload);
+        state.chartData = transactionGroupByCategory(state.budgets.budget.transactions);
     },
   }
-})
+});
+
+
+function transactionGroupByCategory(transactions: any): {
+    label: string,
+    value: number
+}[]
+{
+    const groupedTransactions = transactions.reduce((acc: any, transaction: any) => {
+      const { category, amount } = transaction;
+      if (!acc[category]) {
+          acc[category] = { 
+            value: 0,
+            label: category, 
+          };
+      }
+      acc[category].value += amount;
+      return acc;
+    }, {});
+  
+    return Object.values(groupedTransactions);
+}
 
 export const { 
     addExpense,

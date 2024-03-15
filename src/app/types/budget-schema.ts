@@ -15,7 +15,7 @@ export type BudgetSchema = {
         },
         transactions: Transactions[],
         listTransactionsCategories: string[],
-    }
+    },
 }
 
 type User = {

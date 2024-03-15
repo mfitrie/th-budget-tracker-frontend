@@ -61,6 +61,7 @@ export default function Transaction() {
                 <TransactionItem
                   key={ index }
                   expenseName={ item.expenseName }
+                  category={ item.category }
                   date={ dayjs(item.timestamp).format("D MM YYYY - h:mm a") }
                   amount={ item.amount }
                 />
