@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { Icon } from '@iconify/react';
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { getBudgets } from "@/lib/store/reducer/budget";
+import { getBudgets, getChartData } from "@/lib/store/reducer/budget";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import AlertCustom from "@/components/alert-custom"
 import { AppState } from "@/lib/store/store"
@@ -32,7 +32,7 @@ import { AppState } from "@/lib/store/store"
 
 export default function Home() {
   const { budget } = useAppSelector(getBudgets);
-  const chartData = useAppSelector((state: AppState) => state.budget.chartData);
+  const chartData = useAppSelector(getChartData);
 
   const data = [
     { value: 5, label: 'Aaaa' },

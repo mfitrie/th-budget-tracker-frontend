@@ -56,6 +56,32 @@ export const budgetSlice = createSlice({
   name: "budget",
   initialState: { 
     budgets: fakeBudget,
+    listCategory: [
+        "Computer Stat./Consumables",
+        "Photostat, Photography Stationery",
+        "Office Stationery",
+        "Office Supp - Forms, Books",
+        "Gen Supp - Office",
+        "Gen Supp - Medicine",
+        "Gen Supp - Medical Consumables",
+        "Gen Supp - Others",
+        "License Subscription",
+        "Fees/Comm - Others",
+        "Comm - Postal and Courier",
+        "Comm - Phone/Fax/Telex",
+        "Advertisement - Trade Show",
+        "Travel Staff - Meals Allowance - Local",
+        "Travel Staff - Accommodation - Local",
+        "Travel Staff - Transportation - Local",
+        "Travel Staff - Airfare - Local",
+        "Travel Staff - Other Exp - Local",
+        "MV Maint - Gen Maintenance",
+        "MV Maint - Fuel & Road Tax",
+        "Staff Refreshment",
+        "Entertainment - Visitors",
+        "Assets Expensed Off",
+        "Overtime Allowance",
+    ],
     chartData: initChartData,
   },
   reducers: {
@@ -92,3 +118,5 @@ export const {
     addExpense,
 } = budgetSlice.actions;
 export const getBudgets = (state: AppState) => state.budget.budgets;
+export const getChartData = (state: AppState) => state.budget.chartData;
+export const getCategories = (state: AppState) => state.budget.listCategory;

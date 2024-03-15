@@ -11,24 +11,36 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from '@/components/ui/label';
-import { useAppDispatch } from '@/lib/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
 import { Transactions } from '@/app/types/budget-schema';
 import { FormEvent, useState } from 'react';
-import { addExpense } from '@/lib/store/reducer/budget';
+import { addExpense, getCategories } from '@/lib/store/reducer/budget';
+import dayjs from 'dayjs';
 
 
-export default function BottomNavigationBar(){
+export default function BottomNavigationBar() {
     const router = useRouter();
     const pathname = usePathname();
+    const categories = useAppSelector(getCategories);
+
     const TEXT_COLOR = "#26C165";
 
     const dispatch = useAppDispatch();
     const expenseInputDefaultValue: Transactions = {
         expenseName: "",
-        timestamp: "",
+        timestamp: dayjs().format('YYYY-MM-DDTHH:mm'),
         amount: 0,
         currency: "",
         category: "",
@@ -39,60 +51,70 @@ export default function BottomNavigationBar(){
 
 
     return (
-        <div 
-          className="bg-white flex items-center justify-around cursor-pointer"
-          style={{ height: "10vh", }}
+        <div
+            className="bg-white flex items-center justify-around cursor-pointer"
+            style={{ height: "10vh", }}
         >
-            <div 
+            <div
                 className='flex flex-col items-center justify-center gap-2'
-                onClick={ () => {
+                onClick={() => {
                     router.push("/")
-                } }
+                }}
             >
-                <Icon className='text-3xl' icon="material-symbols:dashboard-outline" color={ pathname === "/" ? TEXT_COLOR : "" }/>
+                <Icon className='text-3xl' icon="material-symbols:dashboard-outline" color={pathname === "/" ? TEXT_COLOR : ""} />
                 <span className='text-xs font-bold' style={{ color: pathname === "/" ? TEXT_COLOR : "" }}>Dashboard</span>
             </div>
-            <div 
+            <div
                 className='flex flex-col items-center justify-center gap-2 cursor-pointer'
-                onClick={ () => {
+                onClick={() => {
                     router.push("/transaction")
-                } }
+                }}
             >
-                <Icon className='text-3xl' icon="lucide:briefcase" color={ pathname === "/transaction" ? TEXT_COLOR : "" }/>
+                <Icon className='text-3xl' icon="lucide:briefcase" color={pathname === "/transaction" ? TEXT_COLOR : ""} />
                 <span className='text-xs font-bold' style={{ color: pathname === "/transaction" ? TEXT_COLOR : "" }}>Transaction</span>
             </div>
 
             <div className='flex flex-col items-center justify-center gap-2 cursor-pointer'>
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Icon className='text-4xl' icon="simple-line-icons:plus"/>
+                        <Icon className='text-4xl' icon="simple-line-icons:plus" />
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md">
                         <DialogHeader>
-                        <DialogTitle className="text-left">New expense</DialogTitle>
+                            <DialogTitle className="text-left">New expense</DialogTitle>
                         </DialogHeader>
                         <div className="flex items-center space-x-2">
                             <div className="grid flex-1 gap-2 justify-center">
                                 <DialogDescription className="text-center">
                                     Amount (RM)
                                 </DialogDescription>
-                                <Input className="text-center font-bold text-lg" type="number" placeholder="Enter your expense" onChange={(e: FormEvent<HTMLInputElement>) => {
-                                    const newValue = e.currentTarget.value;
-                                    setExpenseInput(prevValue => ({
-                                        ...prevValue,
-                                        amount: +newValue
-                                    }));
-                                }}/>
+                                <Input 
+                                    className="text-center font-bold text-lg" 
+                                    type="number" 
+                                    placeholder="Enter your expense"
+                                    onChange={(e: FormEvent<HTMLInputElement>) => {
+                                        const newValue = e.currentTarget.value;
+                                        setExpenseInput(prevValue => ({
+                                            ...prevValue,
+                                            amount: +newValue
+                                        }));
+                                    }} 
+                                />
                                 <div className="mt-4 flex flex-col gap-3">
                                     <div className='grid grid-cols-12 items-center gap-4'>
                                         <Label className='col-span-3 text-right'>Date</Label>
-                                        <Input className='col-span-9' type="datetime-local" placeholder="Enter date" onChange={(e: FormEvent<HTMLInputElement>) => {
-                                            const newValue = e.currentTarget.value;
-                                            setExpenseInput(prevValue => ({
-                                                ...prevValue,
-                                                timestamp: newValue,
-                                            }));
-                                        }}/>
+                                        <Input 
+                                            className='col-span-9' 
+                                            type="datetime-local" 
+                                            placeholder="Enter date"
+                                            value={ expenseInput.timestamp }
+                                            onChange={(e: FormEvent<HTMLInputElement>) => {
+                                                const newValue = e.currentTarget.value;
+                                                setExpenseInput(prevValue => ({
+                                                    ...prevValue,
+                                                    timestamp: newValue,
+                                                }));
+                                        }} />
                                     </div>
                                     <div className='grid grid-cols-12 items-center gap-4'>
                                         <Label className='col-span-3 text-right'>Name</Label>
@@ -102,17 +124,42 @@ export default function BottomNavigationBar(){
                                                 ...prevValue,
                                                 expenseName: newValue,
                                             }));
-                                        }}/>
+                                        }} />
                                     </div>
                                     <div className='grid grid-cols-12 items-center gap-4'>
                                         <Label className='col-span-3 text-right'>Category</Label>
-                                        <Input className='col-span-9' type="text" placeholder="Enter category" onChange={(e: FormEvent<HTMLInputElement>) => {
+                                        <Select
+                                            onValueChange={ (value) => {
+                                                setExpenseInput(prevValue => ({
+                                                    ...prevValue,
+                                                    category: value,
+                                                }));
+                                            } }
+                                        >
+                                            <SelectTrigger className="w-[180px]">
+                                                <SelectValue placeholder="Select a category" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>Categories</SelectLabel>
+                                                    {
+                                                        categories.map((category, index) => (
+                                                            <SelectItem
+                                                                key={ index }
+                                                                value={ category }
+                                                            >{ category }</SelectItem>
+                                                        ))
+                                                    }
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                        {/* <Input className='col-span-9' type="text" placeholder="Enter category" onChange={(e: FormEvent<HTMLInputElement>) => {
                                             const newValue = e.currentTarget.value;
                                             setExpenseInput(prevValue => ({
                                                 ...prevValue,
                                                 category: newValue,
                                             }));
-                                        }}/>
+                                        }}/> */}
                                     </div>
                                     <div className='grid grid-cols-12 items-center gap-4'>
                                         <Label className='col-span-3 text-right'>Notes</Label>
@@ -122,7 +169,7 @@ export default function BottomNavigationBar(){
                                                 ...prevValue,
                                                 notes: newValue,
                                             }));
-                                        }}/>
+                                        }} />
                                     </div>
                                 </div>
                             </div>
@@ -141,22 +188,22 @@ export default function BottomNavigationBar(){
                 </Dialog>
             </div>
 
-            <div 
+            <div
                 className='flex flex-col items-center justify-center gap-2 cursor-pointer'
-                onClick={ () => {
+                onClick={() => {
                     router.push("/reports")
-                } }
+                }}
             >
-                <Icon className='text-3xl' icon="mdi:report-line" color={ pathname === "/reports" ? TEXT_COLOR : "" }/>
+                <Icon className='text-3xl' icon="mdi:report-line" color={pathname === "/reports" ? TEXT_COLOR : ""} />
                 <span className='text-xs font-bold' style={{ color: pathname === "/reports" ? TEXT_COLOR : "" }}>Reports</span>
             </div>
-            <div 
+            <div
                 className='flex flex-col items-center justify-center gap-2 cursor-pointer'
-                onClick={ () => {
+                onClick={() => {
                     router.push("/settings")
-                } }
+                }}
             >
-                <Icon className='text-3xl' icon="uil:setting" color={ pathname === "/settings" ? TEXT_COLOR : "" }/>
+                <Icon className='text-3xl' icon="uil:setting" color={pathname === "/settings" ? TEXT_COLOR : ""} />
                 <span className='text-xs font-bold' style={{ color: pathname === "/settings" ? TEXT_COLOR : "" }}>Settings</span>
             </div>
         </div>
