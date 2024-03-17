@@ -92,6 +92,18 @@ export const budgetSlice = createSlice({
         state.budgets.budget.transactions.push(payload);
         state.chartData = transactionGroupByCategory(state.budgets.budget.transactions);
     },
+    replenishTotalBudget: (state, action: PayloadAction<number>) => {
+        const newTotalBudget = action.payload;
+
+        state.budgets.budget.account.cash.amount = state.budgets.budget.account.cash.amount + newTotalBudget;
+
+    },
+    changeMonthBudget: (state, action: PayloadAction<number>) => {
+        const newMonthlyBudget = action.payload;
+
+        state.budgets.budget.monthlyBudget.amount = newMonthlyBudget;
+
+    }
   }
 });
 
@@ -118,6 +130,8 @@ function transactionGroupByCategory(transactions: any): {
 
 export const { 
     addExpense,
+    replenishTotalBudget,
+    changeMonthBudget,
 } = budgetSlice.actions;
 export const getBudgets = (state: AppState) => state.budget.budgets;
 export const getChartData = (state: AppState) => state.budget.chartData;

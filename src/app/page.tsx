@@ -24,16 +24,21 @@ import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { Icon } from '@iconify/react';
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { getBudgets, getChartData } from "@/lib/store/reducer/budget";
+import { changeMonthBudget, getBudgets, getChartData, replenishTotalBudget } from "@/lib/store/reducer/budget";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import AlertCustom from "@/components/alert-custom"
 import { AppState } from "@/lib/store/store"
 import Lottie from "lottie-react";
 import noDataAnimation from "@/assets/no-data-animation.json"
+import { ChangeEvent, FormEvent, useState } from "react"
 
 export default function Home() {
+  const dispatch = useAppDispatch();
   const { budget } = useAppSelector(getBudgets);
   const chartData = useAppSelector(getChartData);
+
+  const [inputTotalBudget, setInputTotalBudget] = useState<number>(0);
+  const [inputMonthBudget, setInputMonthlyBudget] = useState<number>(0);
 
   const data = [
     { value: 5, label: 'Aaaa' },
@@ -62,7 +67,7 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <span className="text-xs">Your balance</span>
           <div className="flex flex-row items-center gap-3">
-            <span className="font-bold text-xl">RM{ budget.account.cash.amount }</span>
+            <span className="font-bold text-xl">RM{ budget.account.cash.amount.toFixed(2) }</span>
             <Dialog>
               <DialogTrigger asChild>
                 <Icon className='text-base' icon="simple-line-icons:plus"/>
@@ -76,12 +81,27 @@ export default function Home() {
                     <DialogDescription className="text-center">
                       Amount (RM)
                     </DialogDescription>
-                    <Input className="text-center font-bold text-lg" type="number" placeholder="Enter your budget"/>
+                    <Input 
+                      className="text-center font-bold text-lg" 
+                      type="number" 
+                      placeholder="Enter your budget"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        const newValue = e.target.value;
+                        setInputTotalBudget(+newValue);
+                      }}
+                    />
                   </div>
                 </div>
                 <DialogFooter className="mt-4 sm:justify-start">
                   <DialogClose asChild>
-                    <Button type="button" variant="default">
+                    <Button 
+                      type="button" 
+                      variant="default"
+                      onClick={() => {
+                        dispatch(replenishTotalBudget(inputTotalBudget));
+                        setInputTotalBudget(0);
+                      }}
+                    >
                       Save
                     </Button>
                   </DialogClose>
@@ -112,12 +132,27 @@ export default function Home() {
                       <DialogDescription className="text-center">
                         Amount (RM)
                       </DialogDescription>
-                      <Input className="text-center font-bold text-lg" type="number" placeholder="Enter your budget"/>
+                      <Input 
+                        className="text-center font-bold text-lg" 
+                        type="number" 
+                        placeholder="Enter your budget"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const newValue = e.target.value;
+                          setInputMonthlyBudget(+newValue);
+                        }}
+                      />
                     </div>
                   </div>
                   <DialogFooter className="mt-4 sm:justify-start">
                     <DialogClose asChild>
-                      <Button type="button" variant="default">
+                      <Button 
+                        type="button" 
+                        variant="default"
+                        onClick={() => {
+                          dispatch(changeMonthBudget(inputMonthBudget))
+                          setInputMonthlyBudget(0);
+                        }}
+                      >
                         Save
                       </Button>
                     </DialogClose>
@@ -137,7 +172,7 @@ export default function Home() {
               </div>
               <div className="col-span-9 flex flex-col gap-1">
                 <span className="font-bold">Monthly budget</span>
-                <span className="font-bold text-lg">RM{ budget.monthlyBudget.amount }</span>
+                <span className="font-bold text-lg">RM{ budget.monthlyBudget.amount.toFixed(2) }</span>
                 <Progress value={33} />
                 <div className="flex flex-row justify-between">
                   <CardDescription>spent: RM488</CardDescription>
