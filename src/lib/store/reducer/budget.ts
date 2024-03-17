@@ -3,7 +3,9 @@ import { AppState } from "../store";
 import { BudgetSchema, Transactions } from "@/app/types/budget-schema";
 import { faker } from "@faker-js/faker";
 
-// const listFakeData =
+const totalBudget = +faker.finance.amount();
+const monthlyBudget = +faker.finance.amount({max: totalBudget});
+
 const fakeBudget: BudgetSchema = {
     listUser: [
         {
@@ -14,10 +16,10 @@ const fakeBudget: BudgetSchema = {
     ],
     budget: {
         account: {
-        cash: {
-            amount: +faker.finance.amount(),
-            currency: "myr", 
-        },
+            cash: {
+                amount: totalBudget,
+                currency: "myr", 
+            },
         },
         replenishBudgetTransactions: Array(1).fill(null).map(item => ({
             timestamp: faker.date.past().toISOString(),
@@ -28,10 +30,10 @@ const fakeBudget: BudgetSchema = {
         })),
         monthlyBudget: {
             currency: "myr",
-            amount: +faker.finance.amount(),
+            amount: monthlyBudget,
             timestampLastUpdated: faker.date.past().toISOString(),
         },
-        transactions: Array(10).fill(null).map(item => ({
+        transactions: Array(5).fill(null).map(item => ({
             expenseName: faker.commerce.product(), 
             timestamp: faker.date.past().toISOString(),
             amount: +faker.finance.amount(),

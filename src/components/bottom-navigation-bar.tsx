@@ -27,7 +27,9 @@ import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
 import { Transactions } from '@/app/types/budget-schema';
 import { FormEvent, useState } from 'react';
 import { addExpense, getCategories } from '@/lib/store/reducer/budget';
+// import styles from "@/app/globals.css";
 import dayjs from 'dayjs';
+import addExpenseSchema from '@/lib/validation/validate-add-expense-input';
 
 
 export default function BottomNavigationBar() {
@@ -62,7 +64,7 @@ export default function BottomNavigationBar() {
                 }}
             >
                 <Icon className='text-3xl' icon="material-symbols:dashboard-outline" color={pathname === "/" ? TEXT_COLOR : ""} />
-                <span className='text-xs font-bold' style={{ color: pathname === "/" ? TEXT_COLOR : "" }}>Dashboard</span>
+                <span className='preventSelect text-xs font-bold' style={{ color: pathname === "/" ? TEXT_COLOR : "" }}>Dashboard</span>
             </div>
             <div
                 className='flex flex-col items-center justify-center gap-2 cursor-pointer'
@@ -71,7 +73,7 @@ export default function BottomNavigationBar() {
                 }}
             >
                 <Icon className='text-3xl' icon="lucide:briefcase" color={pathname === "/transaction" ? TEXT_COLOR : ""} />
-                <span className='text-xs font-bold' style={{ color: pathname === "/transaction" ? TEXT_COLOR : "" }}>Transaction</span>
+                <span className='preventSelect text-xs font-bold' style={{ color: pathname === "/transaction" ? TEXT_COLOR : "" }}>Transaction</span>
             </div>
 
             <div className='flex flex-col items-center justify-center gap-2 cursor-pointer'>
@@ -176,13 +178,26 @@ export default function BottomNavigationBar() {
                         </div>
                         <DialogFooter className="mt-4 sm:justify-start">
                             <DialogClose asChild>
-                                <Button type="button" variant="default" onClick={() => {
+                                <Button type="button" variant="default">Add Expense</Button>
+                            </DialogClose>
+                            
+                            {/* <Button type="button" variant="default" onClick={() => {
+                                try {
+                                    console.log("expenseInput: ", expenseInput)
+                                    addExpenseSchema.parse(expenseInput);
+
                                     dispatch(addExpense(expenseInput));
                                     setExpenseInput(expenseInputDefaultValue);
-                                }}>
-                                    Add Expense
-                                </Button>
-                            </DialogClose>
+                                    
+                                } catch (error) {
+                                    console.error(error);
+                                    // console.log("Error 1", Object.keys(error));
+                                    // console.log("Error 1", error.issues)
+                                    alert("Form is not complete");
+                                }
+                            }}>
+                                Add Expense
+                            </Button> */}
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
@@ -195,7 +210,7 @@ export default function BottomNavigationBar() {
                 }}
             >
                 <Icon className='text-3xl' icon="mdi:report-line" color={pathname === "/reports" ? TEXT_COLOR : ""} />
-                <span className='text-xs font-bold' style={{ color: pathname === "/reports" ? TEXT_COLOR : "" }}>Reports</span>
+                <span className='preventSelect text-xs font-bold' style={{ color: pathname === "/reports" ? TEXT_COLOR : "" }}>Reports</span>
             </div>
             <div
                 className='flex flex-col items-center justify-center gap-2 cursor-pointer'
@@ -204,7 +219,7 @@ export default function BottomNavigationBar() {
                 }}
             >
                 <Icon className='text-3xl' icon="uil:setting" color={pathname === "/settings" ? TEXT_COLOR : ""} />
-                <span className='text-xs font-bold' style={{ color: pathname === "/settings" ? TEXT_COLOR : "" }}>Settings</span>
+                <span className='preventSelect text-xs font-bold' style={{ color: pathname === "/settings" ? TEXT_COLOR : "" }}>Settings</span>
             </div>
         </div>
     )

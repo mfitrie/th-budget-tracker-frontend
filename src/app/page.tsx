@@ -28,7 +28,8 @@ import { getBudgets, getChartData } from "@/lib/store/reducer/budget";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import AlertCustom from "@/components/alert-custom"
 import { AppState } from "@/lib/store/store"
-
+import Lottie from "lottie-react";
+import noDataAnimation from "@/assets/no-data-animation.json"
 
 export default function Home() {
   const { budget } = useAppSelector(getBudgets);
@@ -139,7 +140,7 @@ export default function Home() {
                 <span className="font-bold text-lg">RM{ budget.monthlyBudget.amount }</span>
                 <Progress value={33} />
                 <div className="flex flex-row justify-between">
-                  <CardDescription>spent: RM4300</CardDescription>
+                  <CardDescription>spent: RM488</CardDescription>
                   <CardDescription>left: RM2800</CardDescription>
                 </div>
               </div>
@@ -153,24 +154,33 @@ export default function Home() {
               <CardTitle>Top categories of expenses, August</CardTitle>
             </CardHeader>
             <CardContent>
-            <PieChart
-              series={[
-                {
-                  // arcLabel: (item) => `${item.label} (${item.value})`,
-                  arcLabelMinAngle: 45,
-                  innerRadius: 50,
-                  data: chartData,
-                  // data
-                },
-              ]}
-              sx={{
-                [`& .${pieArcLabelClasses.root}`]: {
-                  fill: 'white',
-                  fontWeight: 'bold',
-                },
-              }}
-              {...size}
-            />
+              {
+                chartData.length !== 0 ? 
+                (
+                  <PieChart
+                    series={[
+                      {
+                        // arcLabel: (item) => `${item.label} (${item.value})`,
+                        arcLabelMinAngle: 45,
+                        innerRadius: 50,
+                        data: chartData,
+                        // data
+                      },
+                    ]}
+                    sx={{
+                      [`& .${pieArcLabelClasses.root}`]: {
+                        fill: 'white',
+                        fontWeight: 'bold',
+                      },
+                    }}
+                    {...size}
+                  />
+                )
+                :
+                (
+                  <Lottie animationData={ noDataAnimation } />
+                )
+              }
             </CardContent>
           </Card>
         </div>

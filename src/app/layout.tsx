@@ -21,10 +21,6 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body className={inter.className}>
-          {/* <AlertCustom 
-            title={ "Expense" }
-            message={ "Add expense success" }
-          /> */}
           <div
             style={{ backgroundColor: "#f7f7f7" }}
           >
